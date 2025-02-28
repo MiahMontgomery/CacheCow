@@ -1,1 +1,9 @@
+fastapi
+uvicorn
+requests
+python-dotenv
+telebot
+transformers
+torch
+huggingface_hub
 
