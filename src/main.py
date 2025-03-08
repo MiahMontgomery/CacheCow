@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.trustedhost import TrustedHostMiddleware
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, RedirectResponse
 from fastapi.exceptions import RequestValidationError
 
 from src.routes.api import router
@@ -42,6 +42,12 @@ app.add_middleware(
 
 # Include API routes with the correct prefix
 app.include_router(router, prefix="/api")
+
+@app.get("/")
+async def root():
+    """Redirect root to API documentation"""
+    logger.info("Root endpoint accessed, redirecting to API docs")
+    return RedirectResponse(url="/api/docs")
 
 @app.exception_handler(CacheCowException)
 async def cachecow_exception_handler(request, exc):
