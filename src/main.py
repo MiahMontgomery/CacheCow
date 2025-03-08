@@ -25,10 +25,10 @@ app = FastAPI(
     openapi_url="/api/openapi.json"
 )
 
-# Add CORS middleware
+# Add CORS middleware with more permissive settings for development
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=settings.CORS_ORIGINS,
+    allow_origins=["*"],  # More permissive for development
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -37,7 +37,7 @@ app.add_middleware(
 # Add trusted host middleware
 app.add_middleware(
     TrustedHostMiddleware,
-    allowed_hosts=settings.ALLOWED_HOSTS
+    allowed_hosts=["*"]  # More permissive for development
 )
 
 # Include API routes with the correct prefix
