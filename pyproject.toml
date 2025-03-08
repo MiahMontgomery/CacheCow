@@ -10,6 +10,8 @@ dependencies = [
     "pydantic>=2.10.6",
     "pydantic-settings>=2.8.1",
     "pyllamacpp>=2.4.3",
+    "requests>=2.32.3",
     "scikit-build>=0.18.1",
+    "tqdm>=4.67.1",
     "uvicorn>=0.34.0",
 ]
