@@ -7,14 +7,16 @@ class Settings(BaseSettings):
     DEBUG: bool = False
 
     # Security settings
-    CORS_ORIGINS: List[str] = ["http://localhost:5000"]
+    CORS_ORIGINS: List[str] = ["*"]
     ALLOWED_HOSTS: List[str] = ["*"]
 
     # GPT4ALL settings
-    MODEL_PATH: str = os.getenv("GPT4ALL_MODEL_PATH", "models/ggml-gpt4all-j-v1.3-groovy.bin")
+    MODEL_DIR: str = os.getenv("GPT4ALL_MODEL_DIR", "models")
+    MODEL_NAME: str = "llama-2-7b-chat.Q4_0.gguf"  # Using GGUF format for GPU support
+    MODEL_PATH: str = os.path.join(MODEL_DIR, MODEL_NAME)
     MAX_TOKENS: int = 2000
     TEMPERATURE: float = 0.7
-    N_THREADS: int = 4
+    N_THREADS: int = 4  # Using more threads for GPU acceleration
 
     # Logging
     LOG_LEVEL: str = "INFO"

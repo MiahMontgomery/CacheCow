@@ -1,0 +1,92 @@
+Objective:
+This agent will handle code generation, execution, and automation for CacheCow using GPT-4ALL and FastAPI. It must integrate GPT-4ALL to process requests while ensuring the API is stable and efficient. The goal is for CacheCow Engine to generate and execute AI-driven code autonomously.
+
+🔹 System Requirements
+FastAPI backend
+GPT-4ALL model for AI code generation
+CORS setup for cross-platform requests
+Endpoints for:
+Code generation (/api/generate)
+System health check (/api/health)
+Workflow execution (/api/workflow)
+🔹 Core Features
+✅ Install GPT-4ALL and required dependencies
+✅ Ensure FastAPI is running and accessible
+✅ Handle code requests and workflow execution
+✅ Maintain logs for debugging
+✅ Optimize server stability
+✅ Future: Integrate OpenDevin for automation
+
+💾 Required Dependencies
+FastAPI
+GPT-4ALL
+Uvicorn (to serve FastAPI)
+Pydantic (for request validation)
+CORS Middleware (for frontend-backend communication)
+📌 Step 1: Install Dependencies
+First, install the required libraries:
+
+sh
+Copy
+Edit
+pip install fastapi gpt4all uvicorn pydantic
+📌 Step 2: Build the API
+Create server.py (or main.py) and add:
+
+python
+Copy
+Edit
+from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel
+import gpt4all
+
+app = FastAPI()
+
+# Load GPT-4ALL model
+model = gpt4all.GPT4All("gpt4all-falcon-newest")
+
+# Define input format
+class PromptRequest(BaseModel):
+    prompt: str
+
+@app.post("/api/generate")
+async def generate_code(request: PromptRequest):
+    try:
+        response = model.generate(request.prompt)
+        return {"generated_code": response}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error generating code: {str(e)}")
+
+@app.get("/api/health")
+async def health_check():
+    return {"status": "running"}
+
+📌 Step 3: Start the API
+Run the backend server:
+
+sh
+Copy
+Edit
+uvicorn server:app --host 0.0.0.0 --port 5000 --reload
+📌 Step 4: Test the API
+Run:
+
+sh
+Copy
+Edit
+curl -X 'POST' \
+  'http://localhost:5000/api/generate' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "prompt": "Write a Python hello world program"
+}'
+📌 Next Steps
+✅ Connect GPT-4ALL
+✅ Test Code Generation
+🔜 Connect Frontend & Backend
+🔜 Add OpenDevin for automation
+
+🚀 Replit Agent Prompt:
+💡 "Set up a FastAPI backend that integrates GPT-4ALL for text and code generation. Ensure the API includes /api/generate, /api/health, and /api/workflow endpoints. The API must handle user requests efficiently, with logging for debugging and CORS enabled for frontend integration. Optimize performance for real-time generation. Once stable, prepare integration with OpenDevin for automation."
+
